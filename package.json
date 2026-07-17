@@ -1,0 +1,30 @@
+{
+  "name": "techmart-api",
+  "version": "1.0.0",
+  "description": "API REST desenvolvida como solução para o desafio técnico de **Desenvolvedor Back-end** da **KNEX Consultoria Jr.**",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FernandoSantos-0/techmart-api.git"
+  },
+  "keywords": [],
+  "author": "Fernando Pereira Dos Santos",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/FernandoSantos-0/techmart-api/issues"
+  },
+  "homepage": "https://github.com/FernandoSantos-0/techmart-api#readme",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pg": "^8.22.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
