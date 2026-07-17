@@ -3,9 +3,13 @@ import authRepositories from "../repositories/authRepositories.js";
 
 class AuthController {
 
-    async register () {};
+    async register (req,res)  {
 
-    async login () {};
+    };
+
+    async login (req,res)  {
+        
+    };
 
 };
 
