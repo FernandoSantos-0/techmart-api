@@ -8,14 +8,19 @@ class AuthRepositories {
 
         const result = await pool.query(text, values);
 
-        return result.rows[0];
+        return result.rows[0] || null;
 
     };
 
     async createUser(user) {
 
         const text = 'INSERT INTO users (name,email,password,role) VALUES ($1, $2, $3, $4) RETURNING *';
-        const values = [user.name,user.email,user.password,user.role];
+        const values = [
+            user.name,
+            user.email,
+            user.password,
+            user.role
+        ];
 
         const result = await pool.query(text, values);
 
@@ -30,7 +35,7 @@ class AuthRepositories {
 
         const result = await pool.query(text, values);
 
-        return result.rows[0];
+        return result.rows[0] || null;
 
     };
 
