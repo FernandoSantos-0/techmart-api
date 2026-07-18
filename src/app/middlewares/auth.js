@@ -9,16 +9,16 @@ export async function authMiddleware(req, res, next){
             error: true,
             mensagem: "Necessario login para acessar a rota!"
         });
-    }
+    };
 
-    const [token] = authHeader.split(' ');
+    const [bearer,token] = authHeader.split(' ');
 
     if (!token){
         return res.status(401).json({
             error: true,
             mensagem: "Necessario login para acessar a rota!"
         });
-    }
+    };
 
     try {
         
