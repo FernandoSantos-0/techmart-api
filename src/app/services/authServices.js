@@ -9,12 +9,12 @@ class AuthServices {
         const user = await authRepositories.findUserByEmail(email);
 
         if (user) {
-            return "Email já existe!";
-        };
+            throw new Error("email já existe!");
+        }
 
         if (role !== "client" && role !== "seller") {
-            return "Não foi possível definir o papel do usuário.";
-        };
+            throw new Error("Não foi possível definir o papel do usuário.");
+        }
 
         const saltRounds = 10;
 
@@ -29,18 +29,43 @@ class AuthServices {
 
         const result = await authRepositories.createUser(newUser);
 
-        const { id, name, email, role, created_at } = result;
+        const { id, name: userName, email: userEmail, role: userRole, created_at } = result;
 
         return {
             id,
-            name,
-            email,
-            role,
+            name: userName,
+            email: userEmail,
+            role: userRole,
             created_at
         };
 
     };
 
+    async login(email, password) {
+
+        const user = await authRepositories.findUserByEmail(email);
+
+        if (!user) {
+            throw new Error("email não existe!");
+        }
+
+        const passwordValid = await bcrypt.compare(password, user.password);
+
+        if (!passwordValid) {
+            throw new Error("senha inválida!");
+        }
+
+        const { id, name, email: userEmail, role, created_at } = user;
+
+        return {
+            id,
+            name,
+            email: userEmail,
+            role,
+            created_at
+        };
+
+    };
 
 };
 
