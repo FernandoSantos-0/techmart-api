@@ -43,6 +43,27 @@ class ProductsControllers {
         };
     };
     
+    async createProduct(req,res){
+
+        try {
+            
+            const {name,description,price,stock,sold} = req.body;
+
+            const rows = await ProductsServices.createProduct(name,description,price,stock,sold);
+
+            return res.status(200).json({
+                error: false, 
+                dados: rows}
+            );
+
+        } catch (error) {
+            return res.status(500).json({
+                error: true,
+                mensagem: "Erro interno do servidor."
+            });
+        };
+    };
+
 };
 
 export default new ProductsControllers();

@@ -7,7 +7,7 @@ class AuthServices {
 
     async register(name, email, password, role) {
 
-        const user = await authRepositories.findUserByEmail(email);
+        const user = await AuthRepositories.findUserByEmail(email);
 
         if (user) {
             return {
@@ -34,7 +34,7 @@ class AuthServices {
             role
         };
 
-        const result = await authRepositories.createUser(newUser);
+        const result = await AuthRepositories.createUser(newUser);
 
         return {
             error: false,
@@ -50,7 +50,7 @@ class AuthServices {
 
     async login(email, password) {
 
-        const user = await authRepositories.findUserByEmail(email);
+        const user = await AuthRepositories.findUserByEmail(email);
 
         if (!user) {
             return {

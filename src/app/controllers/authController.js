@@ -9,8 +9,8 @@ class AuthController {
             
             const { name, email, password, role } = req.body;
 
-            const result = await authServices.register(name,email,password,role);
-
+            const result = await AuthServices.register(name,email,password,role);
+            
             if (result.error) {
                 res.status(400).json(result);
             } else {
@@ -32,7 +32,7 @@ class AuthController {
             
             const { email, password } = req.body;
 
-            const result = await authServices.login(email,password);
+            const result = await AuthServices.login(email,password);
 
             if (result.error) {
                 res.status(401).json(result);

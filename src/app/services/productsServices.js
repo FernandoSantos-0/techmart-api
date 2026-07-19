@@ -18,6 +18,14 @@ class ProductsServices {
 
     };
 
+    async createProduct(name,description,price,stock,sold){
+
+        const rows = await ProductsRepositories.create(name,description,price,stock,sold);
+
+        return rows;
+
+    };
+
 };
 
 export default new ProductsServices();
