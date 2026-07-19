@@ -1,8 +1,8 @@
-async function roleMiddleware(role) {
+function roleMiddleware(role) {
 
     return async function (req, res, next) {
 
-        if (req.user.role === role) {
+        if (req.user.role == role) {
             return next();
         }
 
@@ -15,6 +15,6 @@ async function roleMiddleware(role) {
 
 }
 
-export { roleMiddleware };
+export default roleMiddleware;
 
 

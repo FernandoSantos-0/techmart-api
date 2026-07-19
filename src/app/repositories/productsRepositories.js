@@ -15,11 +15,11 @@ class productsRepositories {
     async findById(id) {
 
         const text = 'SELECT * FROM products WHERE id = $1';
-        const values = id;
+        const values = [id];
 
         const result = await pool.query(text, values);
 
-        return result.rows || null;
+        return result.rows[0] || null;
 
     }
 
