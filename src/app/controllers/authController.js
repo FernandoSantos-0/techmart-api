@@ -1,5 +1,5 @@
 
-import authServices from "../services/authServices.js";
+import AuthServices from "../services/authServices.js";
 
 class AuthController {
 

@@ -1,4 +1,4 @@
-function roleMiddleware(role) {
+export default function role(role) {
 
     return async function (req, res, next) {
 
@@ -14,7 +14,4 @@ function roleMiddleware(role) {
     };
 
 }
-
-export default roleMiddleware;
-
 

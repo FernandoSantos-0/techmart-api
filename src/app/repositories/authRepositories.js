@@ -8,7 +8,7 @@ class AuthRepositories {
 
         const result = await pool.query(text, values);
 
-        return result.rows[0] || null;
+        return result.rows[0];
 
     };
 
@@ -35,7 +35,7 @@ class AuthRepositories {
 
         const result = await pool.query(text, values);
 
-        return result.rows[0] || null;
+        return result.rows[0];
 
     };
 

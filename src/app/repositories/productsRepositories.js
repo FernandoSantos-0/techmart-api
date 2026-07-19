@@ -1,6 +1,6 @@
 import pool from "../database/db.js";
 
-class productsRepositories {
+class ProductsRepositories {
 
     async findAll() {
         
@@ -8,7 +8,7 @@ class productsRepositories {
 
         const result = await pool.query(text);
 
-        return result.rows || null;
+        return result.rows;
 
     }
 
@@ -19,10 +19,10 @@ class productsRepositories {
 
         const result = await pool.query(text, values);
 
-        return result.rows[0] || null;
+        return result.rows[0];
 
     }
 
 }
 
-export default new productsRepositories();
+export default new ProductsRepositories();
