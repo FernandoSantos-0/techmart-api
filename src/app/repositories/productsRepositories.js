@@ -45,6 +45,17 @@ class ProductsRepositories {
 
     };
 
+    async delete(id) {
+
+        const text = 'DELETE FROM products WHERE id = $1 RETURNING *';
+        const values = [id];
+
+        const result = await pool.query(text, values);
+
+        return result.rows[0];
+
+    };
+
 };
 
 export default new ProductsRepositories();

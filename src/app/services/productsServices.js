@@ -69,6 +69,21 @@ class ProductsServices {
 
     };
 
+    async deleteProduct(id) {
+
+        const rows = await ProductsRepositories.delete(id);
+
+        if (!rows) {
+            return {
+                error: true,
+                mensagem: "Produto não encontrado."
+            };
+        }
+
+        return rows;
+
+    };
+
 };
 
 export default new ProductsServices();
