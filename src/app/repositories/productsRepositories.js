@@ -34,6 +34,8 @@ class ProductsRepositories {
 
     };
 
+    async update(){}
+
 };
 
 export default new ProductsRepositories();
