@@ -34,7 +34,16 @@ class ProductsRepositories {
 
     };
 
-    async update(){}
+    async update(name,description,price,stock,id){
+
+        const text = 'UPDATE products SET name = $1, description = $2, price = $3, stock = $4, updated_at = CURRENT_TIMESTAMP WHERE id = $5 RETURNING *';
+        const values = [name,description,price,stock,id];
+
+        const result = await pool.query(text,values);
+
+        return result.rows[0];
+
+    };
 
 };
 

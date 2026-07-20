@@ -57,6 +57,26 @@ class ProductsControllers {
         };
     };
 
+    async updateProducts(req,res){
+
+        try {
+            
+            const {name,description,price,stock} = req.body;
+            const { id } = req.params;
+
+            const rows = await ProductsServices.updateProduct(name,description,price,stock,id);
+
+            return res.status(200).json(rows);
+
+        } catch (error) {console.log(error);
+            return res.status(500).json({
+                error: true,
+                mensagem: "Erro interno do servidor."
+            });
+        };
+
+    };
+
 };
 
 export default new ProductsControllers();

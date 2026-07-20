@@ -16,6 +16,7 @@ router.post('/auth/login', AuthController.login);
 router.get('/products', auth, ProductsController.listAllProducts);
 router.get('/products/:id', auth, ProductsController.listByIdProducts);
 router.post('/products', auth, role('seller'),ProductsController.createProduct);
+router.put('/products/:id', auth, role('seller'),ProductsController.updateProducts);
 
 /*Compras*/
 
