@@ -24,6 +24,7 @@ router.delete('/products/:id', auth, role('seller'), ProductsController.deletePr
 /*Compras*/
 
 router.post("/orders", auth, role("client"), clientController.clientBuy);
+router.get("/orders", auth, role("client"), clientController.listOrders);
 
 /*Vendedor*/
 

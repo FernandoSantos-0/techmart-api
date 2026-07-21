@@ -36,6 +36,33 @@ class ClientRepositories {
 
     };
 
+    async findOrdersByUserId(user_id) {
+
+        const text = `
+            SELECT
+                o.id,
+                o.total,
+                o.created_at,
+                oi.product_id,
+                p.name AS product_name,
+                oi.quantity,
+                oi.unit_price
+            FROM orders o
+            JOIN order_items oi
+                ON o.id = oi.order_id
+            JOIN products p
+                ON p.id = oi.product_id
+            WHERE o.user_id = $1
+            ORDER BY o.created_at DESC`;
+
+        const values = [user_id];
+
+        const result = await pool.query(text, values);
+
+        return result.rows;
+
+    };
+
 };
 
 export default new ClientRepositories();

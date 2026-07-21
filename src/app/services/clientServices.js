@@ -58,8 +58,26 @@ class ClientServices {
             }
         };
 
-    }
+    };
 
-}
+    async listOrders(user_id) {
+
+        const orders = await ClientRepositories.findOrdersByUserId(user_id);
+
+        if (orders.length === 0) {
+            return {
+                error: true,
+                mensagem: "Nenhuma compra encontrada."
+            };
+        }
+
+        return {
+            error: false,
+            dados: orders
+        };
+
+    };
+
+};
 
 export default new ClientServices();
