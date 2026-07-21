@@ -3,6 +3,8 @@ import auth from "./app/middlewares/auth.js";
 import role from "./app/middlewares/role.js";
 import AuthController from "./app/controllers/authController.js";
 import ProductsController from "./app/controllers/productsController.js";
+import clientController from "./app/controllers/clientController.js";
+
 
 const router = Router();
 
@@ -20,6 +22,8 @@ router.put('/products/:id', auth, role('seller'),ProductsController.updateProduc
 router.delete('/products/:id', auth, role('seller'), ProductsController.deleteProducts);
 
 /*Compras*/
+
+router.post("/orders", auth, role("client"), clientController.clientBuy);
 
 /*Vendedor*/
 
