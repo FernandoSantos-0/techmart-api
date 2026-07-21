@@ -4,7 +4,7 @@ import role from "./app/middlewares/role.js";
 import AuthController from "./app/controllers/authController.js";
 import ProductsController from "./app/controllers/productsController.js";
 import clientController from "./app/controllers/clientController.js";
-
+import SellerController from "./app/controllers/sellerController.js";
 
 const router = Router();
 
@@ -27,5 +27,8 @@ router.post("/orders", auth, role("client"), clientController.clientBuy);
 router.get("/orders", auth, role("client"), clientController.listOrders);
 
 /*Vendedor*/
+
+router.get("/seller/sales",auth,role("seller"),SellerController.listSales);
+router.get("/seller/sales/:product_id",auth,role("seller"), SellerController.listSalesByProduct);
 
 export { router };
