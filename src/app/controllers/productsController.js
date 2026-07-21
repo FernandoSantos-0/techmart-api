@@ -40,9 +40,9 @@ class ProductsControllers {
 
         try {
             
-            const {name,description,price,stock,sold} = req.body;
+            const {name,description,price,stock} = req.body;
 
-            const rows = await ProductsServices.createProduct(name,description,price,stock,sold);
+            const rows = await ProductsServices.createProduct(name,description,price,stock,false);
 
             return res.status(201).json({
                 error: false, 
@@ -87,6 +87,12 @@ class ProductsControllers {
             return res.status(200).json(rows);
 
         } catch (error) {
+            if (error.code === '23503') {
+                return res.status(400).json({
+                    error: true,
+                    mensagem: "Produto já vendido."
+                });
+            };
             return res.status(500).json({
                 error: true,
                 mensagem: "Erro interno do servidor."

@@ -2,6 +2,299 @@
 
 API REST desenvolvida como solução para o desafio técnico de **Desenvolvedor Back-end** da **KNEX Consultoria Jr.**
 
-## Objetivo
+O sistema simula o funcionamento de uma loja virtual, permitindo que vendedores gerenciem produtos e que clientes realizem compras, com autenticação, autorização e controle de estoque.
 
-Este projeto implementa uma API REST para gerenciamento de uma loja virtual, permitindo o cadastro e autenticação de usuários, gerenciamento de produtos, realização de compras e consulta ao histórico de vendas, respeitando as regras de negócio propostas no desafio.
+---
+
+# Tecnologias Utilizadas
+
+* Node.js
+* Express.js
+* PostgreSQL
+* JWT (JSON Web Token)
+* bcrypt
+* dotenv
+
+---
+
+# Decisões Técnicas
+
+O projeto foi desenvolvido utilizando **Node.js** e **Express**, por serem tecnologias leves, amplamente utilizadas no desenvolvimento de APIs REST e por oferecerem uma estrutura simples e organizada.
+
+O banco de dados escolhido foi o **PostgreSQL**, permitindo armazenar as informações de usuários, produtos, pedidos e itens dos pedidos de forma relacional e consistente.
+
+Para organizar o código foi utilizada a arquitetura em camadas:
+
+* **Repositories**: responsáveis pelo acesso ao banco de dados e execução das consultas SQL.
+* **Services**: responsáveis pelas regras de negócio e validações.
+* **Controllers**: responsáveis por receber as requisições HTTP e retornar as respostas.
+* **Routes**: responsáveis pelo mapeamento das rotas da aplicação.
+* **Middlewares**: responsáveis pela autenticação e autorização dos usuários.
+
+Essa organização facilita a manutenção do projeto, separando responsabilidades e tornando o código mais legível.
+
+---
+
+# Estrutura do Projeto
+
+src
+│
+├── controllers
+├── database
+├── middlewares
+├── repositories
+├── routes
+├── services
+├── app.js
+└── server.js
+
+---
+
+# Requisitos
+
+Antes de executar o projeto é necessário possuir instalado:
+
+* Node.js
+* PostgreSQL
+* Git
+
+---
+
+# Clonando o projeto
+
+
+git clone https://github.com/FernandoSantos-0/techmart-api
+
+
+Entre na pasta do projeto:
+
+techmart-api
+
+---
+
+# Instalação
+
+Instale as dependências:
+
+npm install
+
+---
+
+# Configuração
+
+Crie um arquivo .env na raiz do projeto.
+
+Com as sequintes linhas:
+
+PORT=3000
+
+DATABASE_URL=postgres://usuario:senha@localhost:5432/nomedadb
+
+JWT_SECRET=sua_chave_secreta
+
+
+---
+
+# Banco de Dados
+
+Crie um banco de dados PostgreSQL.
+
+Em seguida execute os scripts SQL responsáveis pela criação das tabelas.
+
+As tabelas utilizadas são:
+
+* users
+* products
+* orders
+* order_items
+
+---
+
+# Executando o projeto
+
+Modo desenvolvimento:
+
+npm run dev
+
+Servidor:
+
+http://localhost:3000
+
+---
+
+# Autenticação
+
+O sistema utiliza autenticação baseada em JWT.
+
+Após realizar o login, copie o token retornado e envie em todas as rotas protegidas.
+
+Exemplo De Token:
+
+Authorization: Bearer SEU_TOKEN
+
+---
+
+# Como testar a API
+
+As rotas podem ser testadas utilizando:
+
+* Postman
+* Insomnia
+
+---
+
+# Testando a API
+
+## Exemplos de Requisições
+
+### 1. Registrar Usuário
+
+    POST /auth/register
+
+    Body (JSON):
+
+    {
+        "name": "Fernando Santos",
+        "email": "fernando@email.com",
+        "password": "123456",
+        "role": "seller"
+    }
+
+    Para cadastrar um cliente:
+
+    {
+        "name": "João Silva",
+        "email": "joao@email.com",
+        "password": "123456",
+        "role": "client"
+    }
+
+### 2. Login
+
+    POST /auth/login
+
+    Body:
+
+    {
+        "email": "fernando@email.com",
+        "password": "123456"
+    }
+
+    Copie o token retornado pela API.
+
+    Nas próximas requisições protegidas adicione o cabeçalho:
+
+    Authorization: Bearer SEU_TOKEN
+
+### 3. Criar Produto
+
+    POST /products
+
+    Acesso: Vendedor
+
+    Body:
+
+    {
+        "name": "Notebook Dell",
+        "description": "Notebook Intel i5 16GB RAM",
+        "price": 3500,
+        "stock": 10
+    }
+
+### 4. Listar Produtos
+
+    GET /products
+
+    Não possui Body.
+
+### 5. Buscar Produto
+
+    GET /products/:id
+
+    Exemplo:
+
+    GET /products/1
+
+    Não possui Body.
+
+### 6. Atualizar Produto
+
+    PUT /products/:id
+
+    Acesso: Vendedor
+
+    Exemplo:
+
+    PUT /products/1
+
+    Body:
+
+    {
+        "name": "Notebook Dell Inspiron",
+        "description": "Notebook Intel i5 16GB RAM SSD 512GB",
+        "price": 3900,
+        "stock": 8
+    }
+
+### 7. Excluir Produto
+
+    DELETE /products/:id
+
+    Acesso: Vendedor
+
+    Exemplo:
+
+    DELETE /products/1
+
+    Não possui Body.
+
+### 8. Realizar Compra
+
+    POST /orders
+
+    Acesso: Cliente
+
+    Body:
+
+    {
+        "products": [
+            {
+                "product_id": 1,
+                "quantity": 2
+            },
+            {
+                "product_id": 3,
+                "quantity": 1
+            }
+        ]
+    }
+
+### 9. Listar Compras do Cliente
+
+    GET /orders
+
+    Acesso: Cliente
+
+    Não possui Body.
+
+### 10. Histórico Geral de Vendas
+
+    GET /seller/sales
+
+    Acesso: Vendedor
+
+    Não possui Body.
+
+### 11. Histórico de Vendas de um Produto
+
+    GET /seller/sales/:product_id
+
+    Exemplo:
+
+    GET /seller/sales/1
+
+    Não possui Body.
+
+# Autor
+
+Projeto desenvolvido como solução para o desafio técnico de Desenvolvedor Back-end da KNEX Consultoria Jr.
