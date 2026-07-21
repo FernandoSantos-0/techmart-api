@@ -10,7 +10,7 @@ O sistema simula o funcionamento de uma loja virtual, permitindo que vendedores 
 
 * Node.js
 * Express.js
-* PostgreSQL
+* PostgreSQL(pg)
 * JWT (JSON Web Token)
 * bcrypt
 * dotenv
@@ -32,21 +32,6 @@ Para organizar o código foi utilizada a arquitetura em camadas:
 * **Middlewares**: responsáveis pela autenticação e autorização dos usuários.
 
 Essa organização facilita a manutenção do projeto, separando responsabilidades e tornando o código mais legível.
-
----
-
-# Estrutura do Projeto
-
-src
-│
-├── controllers
-├── database
-├── middlewares
-├── repositories
-├── routes
-├── services
-├── app.js
-└── server.js
 
 ---
 
@@ -97,22 +82,71 @@ JWT_SECRET=sua_chave_secreta
 
 # Banco de Dados
 
-Crie um banco de dados PostgreSQL.
+    Crie um banco de dados PostgreSQL.
 
-Em seguida execute os scripts SQL responsáveis pela criação das tabelas.
+    Após criar o banco, execute os scripts SQL abaixo para criar todas as tabelas necessárias para o funcionamento da aplicação.
 
-As tabelas utilizadas são:
+    Tabela users
+    
+    CREATE TABLE users (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        email VARCHAR(100) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        role VARCHAR(20) NOT NULL CHECK (role IN ('client', 'seller')),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
 
-* users
-* products
-* orders
-* order_items
+    Tabela products
+
+    CREATE TABLE products (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        description TEXT NOT NULL,
+        price NUMERIC(10,2) NOT NULL,
+        stock INTEGER NOT NULL CHECK (stock >= 0),
+        sold BOOLEAN DEFAULT FALSE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
+    Tabela orders
+
+    CREATE TABLE orders (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER NOT NULL,
+        total NUMERIC(10,2) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+        CONSTRAINT fk_orders_user
+            FOREIGN KEY (user_id)
+            REFERENCES users(id)
+    );
+
+    Tabela order_items
+
+    CREATE TABLE order_items (
+        id SERIAL PRIMARY KEY,
+        order_id INTEGER NOT NULL,
+        product_id INTEGER NOT NULL,
+        quantity INTEGER NOT NULL CHECK (quantity > 0),
+        unit_price NUMERIC(10,2) NOT NULL,
+
+        CONSTRAINT fk_order
+            FOREIGN KEY (order_id)
+            REFERENCES orders(id)
+            ON DELETE CASCADE,
+
+        CONSTRAINT fk_product
+            FOREIGN KEY (product_id)
+            REFERENCES products(id)
+    );
+
+    Após executar os quatro scripts acima, o banco estará pronto para utilização pela aplicação.
 
 ---
 
 # Executando o projeto
-
-Modo desenvolvimento:
 
 npm run dev
 
